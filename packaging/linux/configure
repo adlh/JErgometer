@@ -17,9 +17,13 @@ echo ' yes'
 echo -n "checking for librxtxSerial.so..."
 rxtxSo=`whereis librxtxSerial.so | cut -d ":" -f 2 | cut -d " " -f 2`
 if [ "$rxtxSo" == "" ]; then
-	echo ' failed!'
-	echo "Could not find librxtxSerial.so.  Please reinstall the RXTX library." >&2
-	exit 1
+	if [ -e /usr/lib/jni/librxtxSerial.so ]; then
+		rxtxSo=/usr/lib/jni/librxtxSerial.so
+	else
+        echo ' failed!'
+        echo "Could not find librxtxSerial.so.  Please reinstall the RXTX library." >&2
+        exit 1
+    fi
 fi
 rxtxSoDir=`dirname $rxtxSo`
 echo ' yes'
